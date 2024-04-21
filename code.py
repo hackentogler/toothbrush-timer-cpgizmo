@@ -30,8 +30,8 @@ splash.append(bg_sprite)
 text_group = displayio.Group(scale=2, x=0, y=10)
 text = get_temperature()
 # Uncomment the next two lines for using a bitmap font (performance suffers)
-#the_font = bitmap_font.load_font("/font/Helvetica-Bold-16.bdf")
-#text_label = label.Label(the_font, text=text, color=0xFFFF00)
+# the_font = bitmap_font.load_font("/font/Helvetica-Bold-16.bdf")
+# text_label = label.Label(the_font, text=text, color=0xFFFF00)
 temp_text_label = label.Label(terminalio.FONT, text=text, color=0xFFFF00)
 text_group.append(temp_text_label)
 splash.append(text_group)
@@ -41,7 +41,7 @@ text_group = displayio.Group(scale=4, x=0, y=100)
 text = "Starting..."
 text_label = label.Label(terminalio.FONT, text=text, color=0xFFFF00)
 # Uncomment the next line for using a bitmap font (performance suffers)
-#text_label = label.Label(the_font, text=text, color=0xFFFF00)
+# text_label = label.Label(the_font, text=text, color=0xFFFF00)
 text_group.append(text_label)
 splash.append(text_group)
 
@@ -60,20 +60,27 @@ for j in range(num_sides):
     # Uncomment to rest bg color
     #color_palette[0] = 0x000088
     for i in range(num_iters):
-        text_label.text = f"Side {j+1}:\n{seconds} " + ("seconds" if seconds != 1 else "second")
-        time.sleep(1)
+        # debug
+        # milli_sec = int(round(time.time() * 1000))
+        # print(milli_sec)
+        # text_label.text = f"Side {j+1}:\n{seconds} " + ("seconds" if seconds != 1 else "second")
+        text_label.text = f"Side {j+1}:\n{seconds} seconds"
+        # Hardware is slow, this is closer to 30 seconds when seconds = 30
+        time.sleep(.8)
         seconds = seconds - 1
+        # milli_sec = int(round(time.time() * 1000))
+        # print(milli_sec)
     
-    cp.play_tone(2000,0.2)
+    cp.play_tone(2000, 0.2)
     if j < num_sides - 1:
         seconds = 30
         text_label.text = "CHANGE\nSIDES"
         for k in range(num_flashes):
             # Uncomment to change bg color
-            #color_palette[0] = 0xFFFFFF 
+            # color_palette[0] = 0xFFFFFF 
             text_label.color = 0xFFFFFF
             time.sleep(.1)
-            #color_palette[0] = 0x000000
+            # color_palette[0] = 0x000000
             text_label.color = 0x00FF00
             time.sleep(.1)
             text_label.color = 0xFF0000
